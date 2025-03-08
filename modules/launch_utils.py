@@ -16,11 +16,11 @@ normalized_filepath = lambda filepath: str(Path(filepath).absolute())
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--data-dir", type=str, default=os.path.dirname(modules_path), help="base path where all user data is stored", )
-parser.add_argument("--models-dir", type=str, default=None, help="base path where models are stored; overrides --data-dir", )
+parser.add_argument("--models-dir", type=str, default=None, help="base path where models are stored", )
 parser.add_argument("--ckpt-dir", type=normalized_filepath, default=None, help="Path to directory with stable diffusion checkpoints")
 parser.add_argument("--vae-dir", type=normalized_filepath, default=None, help="Path to directory with VAE files")
 parser.add_argument("--lora-dir", type=normalized_filepath, default=None, help="Path to directory with LoRA files")
+parser.add_argument("--branch", type=str, default="main", help="Branch name for TrainTrain")
 parser.add_argument("--skip-python-version-check", action='store_true', help="launch.py argument: do not check python version")
 parser.add_argument("--skip-torch-cuda-test", action='store_true', help="launch.py argument: do not check if CUDA is able to work properly")
 parser.add_argument("--reinstall-xformers", action='store_true', help="launch.py argument: install the appropriate version of xformers even if you have some version already installed")
@@ -33,7 +33,7 @@ parser.add_argument("--ngrok", type=str, help="ngrok authtoken, alternative to g
 parser.add_argument("--xformers", action='store_true', help="enable xformers for cross attention layers")
 parser.add_argument("--use-cpu", nargs='+', help="use CPU as torch device for specified modules", default=[], type=str.lower)
 parser.add_argument("--use-ipex", action="store_true", help="use Intel XPU as torch device")
-parser.add_argument("--ui-settings-file", type=str, help="filename to use for ui settings", default=os.path.join(parser.parse_known_args()[0].data_dir, 'config.json'))
+parser.add_argument("--thema", type=str, default="origin", help='change gradio thema, "base","default","origin","citrus","monochrome","soft","glass","ocean"')
 
 args, _ = parser.parse_known_args()
 
@@ -192,6 +192,7 @@ re_requirement = re.compile(r"\s*([-_a-zA-Z0-9]+)\s*(?:==\s*([-+_.a-zA-Z0-9]+))?
 
 def prepare_environment():
     tt_repo = "https://github.com/hako-mikan/sd-webui-traintrain.git"
+    tt_branch = args.branch
     torch_index_url = os.environ.get('TORCH_INDEX_URL', "https://download.pytorch.org/whl/cu121")
     torch_command = os.environ.get('TORCH_COMMAND', f"pip install torch==2.3.1 torchvision==0.18.1 --extra-index-url {torch_index_url}")
     if args.use_ipex:
@@ -257,7 +258,7 @@ def prepare_environment():
     if not is_installed("ngrok") and args.ngrok:
         run_pip("install ngrok", "ngrok")
         
-    git_clone(tt_repo, os.path.join(script_path, "traintrain"), "traintrain", "main")
+    git_clone(tt_repo, os.path.join(script_path, "traintrain"), "traintrain", tt_branch)
 
     if not os.path.isfile(requirements_file):
         requirements_file = os.path.join(script_path, requirements_file)

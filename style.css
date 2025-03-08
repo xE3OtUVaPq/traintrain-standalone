@@ -1,0 +1,115 @@
+:root, .dark{
+    --checkbox-label-gap: 0.25em 0.1em;
+    --section-header-text-size: 12pt;
+    --block-background-fill: transparent;
+}
+
+.block.padded:not(.gradio-accordion) {
+    padding: 0 !important;
+}
+
+div.gradio-container{
+    max-width: unset !important;
+}
+
+.hidden{
+    display: none !important;
+}
+
+.compact{
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+div.form{
+    border-width: 0;
+    box-shadow: none;
+    background: transparent;
+    overflow: visible;
+    gap: 0.5em;
+}
+
+.block.gradio-dropdown,
+.block.gradio-slider,
+.block.gradio-checkbox,
+.block.gradio-textbox,
+.block.gradio-radio,
+.block.gradio-checkboxgroup,
+.block.gradio-number,
+.block.gradio-colorpicker {
+    border-width: 0 !important;
+    box-shadow: none !important;
+}
+
+div.gradio-group, div.styler{
+    border-width: 0 !important;
+    background: none;
+}
+.gap.compact{
+    padding: 0;
+    gap: 0.2em 0;
+}
+
+div.compact{
+    gap: 1em;
+}
+
+
+.gradio-dropdown ul.options{
+    z-index: 3000;
+    min-width: fit-content;
+    max-width: inherit;
+    white-space: nowrap;
+}
+
+@media (pointer:fine) {
+    .gradio-dropdown ul.options li.item {
+        padding: 0.05em 0;
+    }
+}
+
+.gradio-dropdown ul.options li.item.selected {
+    background-color: var(--neutral-100);
+}
+
+.dark .gradio-dropdown ul.options li.item.selected {
+    background-color: var(--neutral-900);
+}
+
+.gradio-dropdown div.wrap.wrap.wrap.wrap{
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.gradio-dropdown:not(.multiselect) .wrap-inner.wrap-inner.wrap-inner{
+    flex-wrap: unset;
+}
+
+.gradio-dropdown .single-select{
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.gradio-dropdown .token-remove.remove-all.remove-all{
+    display: none;
+}
+
+.gradio-dropdown.multiselect .token-remove.remove-all.remove-all{
+    display: flex;
+}
+
+.gradio-slider input[type="number"]{
+    width: 6em;
+}
+
+.block.gradio-checkbox {
+    margin: 0.75em 1.5em 0 0;
+}
+
+.gradio-button.tool{
+    max-width: 2.2em;
+    min-width: 2.2em !important;
+    height: 2.4em;
+    align-self: end;
+    line-height: 1em;
+    border-radius: 0.5em;
+}

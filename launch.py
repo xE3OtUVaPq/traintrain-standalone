@@ -14,6 +14,8 @@ def main():
 
     if not args.skip_prepare_environment:
         prepare_environment()
+    
+    import modules.gradio_extensions
 
     start()
 
