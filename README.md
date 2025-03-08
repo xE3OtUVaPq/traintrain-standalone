@@ -1,5 +1,6 @@
 # Traintrain Standalone
-　Text-to-Image Low Rank Adaption (LoRA) training tool. Stand alone environment for sd-webui-traintrain.
+　Text-to-Image Low Rank Adaption (LoRA) training tool. Stand alone environment for sd-webui-traintrain.  
+　Stable Diffusion WebUI用のLoRA学習拡張であるsd-webui-traintrainをスタンドアロンで使用するための環境を構築します。
 
 [<img src="https://img.shields.io/badge/lang-Egnlish-red.svg?style=plastic" height="25" />](#overview)
 [<img src="https://img.shields.io/badge/言語-日本語-green.svg?style=plastic" height="25" />](##概要)
