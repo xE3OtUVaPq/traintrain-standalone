@@ -2,7 +2,7 @@
 　Text-to-Image Low Rank Adaption (LoRA) training tool. Stand alone environment for sd-webui-traintrain.
 
 [<img src="https://img.shields.io/badge/lang-Egnlish-red.svg?style=plastic" height="25" />](#overview)
-[<img src="https://img.shields.io/badge/言語-日本語-green.svg?style=plastic" height="25" />](## 概要)
+[<img src="https://img.shields.io/badge/言語-日本語-green.svg?style=plastic" height="25" />](##概要)
 [<img src="https://img.shields.io/badge/Support-%E2%99%A5-magenta.svg?logo=github&style=plastic" height="25" />](https://github.com/sponsors/hako-mikan)
 
 ## Overview
