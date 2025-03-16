@@ -40,6 +40,7 @@ set COMMANDLINE_ARGS=--models-dir X:\StabilityMatrix\Models --branch dev
 | `--skip-python-version-check` | Skips Python version check at startup. |
 | `--skip-torch-cuda-test` | Skips Torch CUDA test at startup. |
 | `--skip-prepare-environment` | Disables environment setup at startup. |
+| `--disable-update` | Disables update of TrainTrain. |
 
 ## Command-line Execution
 If you want to run the tool from the command line without launching the WebUI, follow these steps.
@@ -116,6 +117,7 @@ set COMMANDLINE_ARGS=--models-dir X:\StabilityMatrix\Models --branch dev
 | `--skip-python-version-check`    | 起動時にPythonのバージョンチェックをスキップします。 |
 | `--skip-torch-cuda-test`         | 起動時にTorchのCUDAテストをスキップします。 |
 | `--skip-prepare-environment`     | 起動時の環境構築を無効化します。 |
+| `--disable-update` | TrainTrainのアップデートを無効化します。 |
 
 ## コマンドライン起動
 　WebUIを起動せずにコマンドラインから実行したい場合には以下の手順を踏んでください。

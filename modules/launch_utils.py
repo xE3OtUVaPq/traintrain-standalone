@@ -25,7 +25,7 @@ parser.add_argument("--skip-python-version-check", action='store_true', help="la
 parser.add_argument("--skip-torch-cuda-test", action='store_true', help="launch.py argument: do not check if CUDA is able to work properly")
 parser.add_argument("--reinstall-xformers", action='store_true', help="launch.py argument: install the appropriate version of xformers even if you have some version already installed")
 parser.add_argument("--reinstall-torch", action='store_true', help="launch.py argument: install the appropriate version of torch even if you have some version already installed")
-parser.add_argument("--update-check", action='store_true', help="launch.py argument: check for updates at startup")
+parser.add_argument("--disable-update", action='store_true', help="Disable auto-update of TrainTrain")
 parser.add_argument("--skip-prepare-environment", action='store_true', help="launch.py argument: skip all environment preparation")
 parser.add_argument("--skip-install", action='store_true', help="launch.py argument: skip installation of packages")
 parser.add_argument("--dump-sysinfo", action='store_true', help="launch.py argument: dump limited sysinfo file (without information about extensions, options) to disk and quit")
@@ -145,7 +145,7 @@ def git_fix_workspace(dir, name):
     return
 
 
-def run_git(dir, name, command, desc=None, errdesc=None, custom_env=None, live: bool = default_command_live, autofix=True):
+def run_git(dir, name, command, desc=None, errdesc=None, custom_env=None, live=True, autofix=True):
     try:
         return run(f'"{git}" -C "{dir}" {command}', desc=desc, errdesc=errdesc, custom_env=custom_env, live=live)
     except RuntimeError:
@@ -167,6 +167,7 @@ def git_clone(url, dir, name, commithash=None):
 
         current_hash = run_git(dir, name, 'rev-parse HEAD', None, f"Couldn't determine {name}'s hash: {commithash}", live=False).strip()
         if current_hash == commithash:
+            print("current_hash == commithash")
             return
 
         if run_git(dir, name, 'config --get remote.origin.url', None, f"Couldn't determine {name}'s origin URL", live=False).strip() != url:
@@ -175,7 +176,7 @@ def git_clone(url, dir, name, commithash=None):
         run_git(dir, name, 'fetch', f"Fetching updates for {name}...", f"Couldn't fetch {name}", autofix=False)
 
         run_git(dir, name, f'checkout {commithash}', f"Checking out commit for {name} with hash: {commithash}...", f"Couldn't checkout commit {commithash} for {name}", live=True)
-
+            
         return
 
     try:
@@ -258,7 +259,9 @@ def prepare_environment():
     if not is_installed("ngrok") and args.ngrok:
         run_pip("install ngrok", "ngrok")
         
-    git_clone(tt_repo, os.path.join(script_path, "traintrain"), "traintrain", tt_branch)
+    git_clone(tt_repo, os.path.join(script_path, "traintrain"), "traintrain", tt_branch, pull=True)
+    if not args.disable_update:
+        git_pull("traintrain")
 
     if not os.path.isfile(requirements_file):
         requirements_file = os.path.join(script_path, requirements_file)
@@ -282,3 +285,15 @@ def dump_sysinfo():
         file.write(text)
 
     return filename
+    
+def git_pull(dirpath='.'):
+    try:
+        result = subprocess.run(
+            ['git', '-C', dirpath, 'pull'],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+        print(f"Pull successful in {dirpath}:\n{result.stdout}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error pulling in {dirpath}:\n{e.stderr}")
